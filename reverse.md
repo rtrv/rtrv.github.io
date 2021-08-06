@@ -152,6 +152,22 @@ def reverse_list(list)
 end
 ```
 
+## Half length times mased solution
+
+```ruby
+def reverse_half_length_times(list)
+  length = list.length
+
+  (0..((length - 1) / 2)).each do |i|
+    n = list[i]
+    list[i] = list[length - i - 1]
+    list[length - i - 1] = n
+  end
+
+  list
+end
+```
+
 ## Benchmark
 
 Let's create simple benchmarking setup:
