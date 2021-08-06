@@ -17,7 +17,7 @@ The kata has the lowest complexity rank: 8 kyu. There's no limit of using standa
  
 ```ruby
 def reverse_list(list)
-	list.reverse
+  list.reverse
 end
 ```
 
