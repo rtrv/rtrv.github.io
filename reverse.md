@@ -8,6 +8,7 @@ I will collect options from the following sources:
 2. Other people solutions from Codewars
 2. StackOvervlow
 3. Standard library implementation
+4. Community help
   
 Then let's benchmark it.
 
@@ -143,13 +144,21 @@ rb_ary_reverse_m(VALUE ary)
 }
 ```
 
+## Lenth times based solution
+
+```ruby
+def reverse_list(list)
+  list.length.times { |n|   }
+end
+```
+
 ## Benchmark
 
 Let's create simple benchmarking setup:
 
 ```ruby
 class ReverseBenchmark
-  TEST_LIST_LENGTH = 1000
+  TEST_LIST_LENGTH = 100000
 
   def call(length = TEST_LIST_LENGTH)
     methods = self.methods.grep /reverse_/
@@ -189,6 +198,21 @@ class ReverseBenchmark
     list.map.with_index{|num, idx| list[(list.length - 1) - idx] }
   end
 
+  def reverse_length_times(list)
+    list.length.times { |n| list[list.length - n] }
+  end
+
+  def reverse_half_length_times(list)
+    length = list.length
+    (0..((length - 1) / 2)).each do |i|
+      n = list[i]
+      list[i] = list[length - i - 1]
+      list[length - i - 1] = n
+    end
+
+    list
+  end
+
   private
 
   def benchmark(method, length)
@@ -212,19 +236,22 @@ ReverseBenchmark.new.call
 There's an example of the result:
 
 ```bash
-0.00034 seconds has been spent to reverse an array with 100000 elements by reverse_standard
-0.00834 seconds has been spent to reverse an array with 100000 elements by reverse_list_for
-0.01095 seconds has been spent to reverse an array with 100000 elements by reverse_reduce_unshift
-0.00676 seconds has been spent to reverse an array with 100000 elements by reverse_new_array
-6.02397 seconds has been spent to reverse an array with 100000 elements by reverse_reduce_sum
-0.00851 seconds has been spent to reverse an array with 100000 elements by reverse_map_with_index
+0.0004 seconds has been spent to reverse an array with 100000 elements by reverse_standard
+0.00884 seconds has been spent to reverse an array with 100000 elements by reverse_list_for
+0.01205 seconds has been spent to reverse an array with 100000 elements by reverse_reduce_unshift
+0.0071 seconds has been spent to reverse an array with 100000 elements by reverse_new_array
+5.98098 seconds has been spent to reverse an array with 100000 elements by reverse_reduce_sum
+0.01047 seconds has been spent to reverse an array with 100000 elements by reverse_map_with_index
+0.00616 seconds has been spent to reverse an array with 100000 elements by reverse_length_times
+0.00607 seconds has been spent to reverse an array with 100000 elements by reverse_half_length_times
 ```
 
 ## Conclusions
 
-1. Standard `Array#reverse` works at least ~15-20 times faster than any Ruby-based implementation in ~20 times
-2. Iterate over an array with unshifting elements works as good as map with index
+1. Standard `Array#reverse` works at least ~10-20 times faster than any Ruby-based implementation
+2. Iterate over an array with unshifting elements works as good as map with index. `reverse_list_for` is a bit faster.
 3. `Array.new` was a good idea to make it a bit faster. It was based on the idea to get rid of array mutations
 4. Replacing of `unshift` to `[n] + acc` dramatically reduced performance
 5. If there's a proper method in Ruby standard library, you better use it
 6. My personal favorite was the one with `unshift`
+7. Iterate over array length or half of length are the best Ruby `reverse` implementations in terms of performance. Both ideas were provided at https://t.me/saintprug
