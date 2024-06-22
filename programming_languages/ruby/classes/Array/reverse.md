@@ -9,13 +9,13 @@ I will collect options from the following sources:
 2. StackOvervlow
 3. Standard library implementation
 4. Community help
-  
+
 Then let's benchmark it.
 
 ## Solving the kata
 
 The kata has the lowest complexity rank: 8 kyu. There's no limit of using standard `Array#reverse`, so it's a valid solution:
- 
+
 ```ruby
 def reverse_list(list)
   list.reverse
@@ -25,21 +25,21 @@ end
 Then you can refactor your solution before you submit it and get access to other solutions. Let's assume that there's no `Array#reverse` and move on.
 
 The first solution is based on the fact that we can iterate over the list and use accumulative array:
- 
+
 ```ruby
 def reverse_list(list)
   reversed_list = []
-	
+
   for n in list
     reversed_list.unshift(n)
   end
-  
+
   reversed_list
 end
 ```
- 
+
 In fact it's a reduction process, so let's rewrite it with `Enumerable#reduce` with accumulator:
- 
+
 ```ruby
 def reverse_list(list)
   list.reduce([]) { |acc, n| acc.unshift(n) }
@@ -100,9 +100,7 @@ All the best solutions there are made using standard `Array#reverse`. However th
 
 ```ruby
 def reverse_list(list)
-  
   list.map.with_index{|num, idx| list[(list.length - 1) - idx] }
-  
 end
 ```
 
