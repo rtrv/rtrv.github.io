@@ -1,4 +1,4 @@
-Hi, I'm Artem. This is my public Dendron vault published over GitHub Pages. I collect notes about software engineering, engineering management, devops and technology
+Hi, I'm Artem. This is my public knowledge base. I collect notes about software engineering, engineering management, devops and technology
 
 I started my carreer as a software development engineer about 13 years ago and I was an engineering manager for a couple of years.
 
