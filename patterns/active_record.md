@@ -1,3 +1,0 @@
-# Active record
-
-TODO history
